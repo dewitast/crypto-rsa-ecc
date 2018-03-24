@@ -106,3 +106,7 @@ venv.bak/
 # Images
 *.bmp
 *.png
+
+# Generated Key
+*.pub
+*.pri

@@ -12,24 +12,29 @@
   <form action="/ecc/generate" method="POST">
     <div>
       <p>Elliptic Curve: y<sup>2</sup> = x<sup>3</sup> +
-        <input type="number" name="x-coef" step="1" value="0" />
+        <input type="number" name="x-coef" step="1" value="0" required/>
         x +
-        <input type="number" name="const" step="1" value="0" />
+        <input type="number" name="const" step="1" value="0" required/>
         mod
-        <input type="number" name="modulo" step="1" value="0" />
+        <input type="number" name="modulo" step="1" value="0" required/>
       </p>
     </div>
     <div>
       <p>Base Point: (
-        <input type="number" name="bpoint-x" step="1" value="0"/>
+        <input type="number" name="bpoint-x" step="1" value="0" required/>
         , 
-        <input type="number" name="bpoint-y" step="1" value="0"/>
+        <input type="number" name="bpoint-y" step="1" value="0" required/>
         )
       </p>
     </div>
     <div>
+      <p>Filename:
+        <input type="text" name="filename" required/>
+      </p>
+    </div>
+    <div>
       <br>
-      <input type="submit" value="Generate Key" />
+      <input type="submit" value="Generate Key"/>
     </div>
   </form>
   <br />
