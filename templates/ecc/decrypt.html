@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>ECC</title>
+</head>
+
+<body>
+  <h1>
+  	Elliptic Curve Cryptography - El Gamal
+  </h1>
+  <form action="/ecc/decrypt" method="POST" enctype="multipart/form-data">
+    <div>
+      <p>Message:</p>
+      <input type="file" name="message" />
+    </div>
+    <div>
+      <p>Elliptic Curve: y<sup>2</sup> = x<sup>3</sup> +
+        <input type="number" name="x-coef" step="1" value="0" />
+        x +
+        <input type="number" name="const" step="1" value="0" />
+        mod
+        <input type="number" name="modulo" step="1" value="0" />
+      </p>
+    </div>
+    <div>
+      <p>Private Key: (
+        <input type="number" name="prikey-x" step="1" value="0"/>
+        , 
+        <input type="number" name="prikey-y" step="1" value="0"/>
+        )
+      </p>
+    </div>
+    <div>
+      <p> Koblitz's variable : 
+        <input type="number" name="koblitz" step="1" value="0"/>
+      </p>
+    </div>
+    <div>
+      <br>
+      <input type="submit" value="Decrypt Message" />
+    </div>
+  </form>
+  <br />
+  <br />
+  <a href="/">Home</a>
+</body>
+
+</html>
