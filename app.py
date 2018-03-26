@@ -25,7 +25,6 @@ def ecc_encrypt():
 	if request.method == 'GET':
 		return render_template('ecc/encrypt.html')
 
-
 	message = request.files['message'].read()
 	kob = int(request.form['koblitz'])
 
@@ -52,9 +51,7 @@ def ecc_encrypt():
 	k = randrange(1, modulo)
 	ciphertext = [curve.add(point, curve.multiply(k, pubkey)) for point in plaintext]
 	ciphertext.append(curve.multiply(k, bpoint))
-	string = ''
-	for point in ciphertext:
-		string += point.print() + ' '
+	string = ' '.join([point.print() for point in ciphertext])
 
 	file = FileStorage(stream=BytesIO(string.encode()), filename='ciphertext.txt')
 	return send_file(file, attachment_filename=file.filename, as_attachment=True)
@@ -64,7 +61,29 @@ def ecc_decrypt():
 	if request.method == 'GET':
 		return render_template('ecc/decrypt.html')
 
-	return render_template('ecc/index.html')
+	message = request.files['message'].read()
+	kob = int(request.form['koblitz'])
+
+	coef = int(request.form['x-coef'])
+	const = int(request.form['const'])
+	modulo = int(request.form['modulo'])
+	if not is_prime(modulo):
+		return "Error: Modulo must be prime"
+	curve = EllipticCurve(coef, const, modulo)
+
+	prikey = int(request.form['prikey'])
+
+	raw_ciphertext = message.decode().split(' ')
+	del raw_ciphertext[-1]
+	ciphertext = [Point(0, 0, modulo, point) for point in raw_ciphertext]
+	point_neg = curve.multiply(prikey, ciphertext[-1])
+	del ciphertext[-1]
+	point_neg.negate()
+	plaintext = [curve.add(point, point_neg) for point in ciphertext]
+	string = decode(plaintext, kob)
+
+	file = FileStorage(stream=BytesIO(string.encode()), filename='plaintext.txt')
+	return send_file(file, attachment_filename=file.filename, as_attachment=True)
 
 @app.route('/ecc/generate', methods=['GET', 'POST'])
 def ecc_generate():

@@ -18,7 +18,4 @@ def decode_point(point, var):
 	return m
 
 def decode(arr, var):
-	res = ''
-	for point in arr:
-		res += chr(decode_point(point, var))
-	return res
+	return ''.join([chr(decode_point(point, var)) for point in arr])

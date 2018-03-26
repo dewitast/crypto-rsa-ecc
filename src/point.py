@@ -1,7 +1,15 @@
 from .utils import invmod
 
 class Point:
-	def __init__(self, absis, ordinat, modulo):
+	def __init__(self, absis, ordinat, modulo, string = None):
+		if string != None:
+			spl = string.split(',')
+			absis = spl[0]
+			ordinat = spl[1]
+			self.absis = int(absis[1:])
+			self.ordinat = int(ordinat[:-1])
+			self.modulo = modulo
+			return
 		self.modulo = modulo
 		self.absis = absis % self.modulo
 		if self.absis<0:
@@ -32,5 +40,5 @@ class Point:
 		return self.modulo == -1
 
 	def print(self):
-		res = "(" + str(self.absis) + ", " + str(self.ordinat) + ")"
+		res = "(" + str(self.absis) + "," + str(self.ordinat) + ")"
 		return res
