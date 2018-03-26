@@ -49,9 +49,6 @@ class EllipticCurve:
 			ordinat += self.modulo
 		return Point(absis, ordinat, self.modulo)
 
-	def subtract(self, point1, point2):
-		return self.add(point1, point2.negate())
-
 	def square(self, point):
 		if point.is_inf():
 			return point

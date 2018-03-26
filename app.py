@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, send_file
 from io import BytesIO
 from random import randrange
 from werkzeug import FileStorage
@@ -27,7 +27,6 @@ def ecc_encrypt():
 
 
 	message = request.files['message'].read()
-	length = len(message)
 	kob = int(request.form['koblitz'])
 
 	coef = int(request.form['x-coef'])
@@ -49,7 +48,16 @@ def ecc_encrypt():
 	if not curve.contains(pubkey):
 		return "Error: The public key is not a point in the curve"
 
-	encode(curve, message, kob)
+	plaintext = encode(curve, message, kob)
+	k = randrange(1, modulo)
+	ciphertext = [curve.add(point, curve.multiply(k, pubkey)) for point in plaintext]
+	ciphertext.append(curve.multiply(k, bpoint))
+	string = ''
+	for point in ciphertext:
+		string += point.print() + ' '
+
+	file = FileStorage(stream=BytesIO(string.encode()), filename='ciphertext.txt')
+	return send_file(file, attachment_filename=file.filename, as_attachment=True)
 
 @app.route('/ecc/decrypt', methods=['GET', 'POST'])
 def ecc_decrypt():

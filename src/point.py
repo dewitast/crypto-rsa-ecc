@@ -11,8 +11,7 @@ class Point:
 			self.ordinat += self.modulo
 
 	def negate(self):
-		if self.ordinat<0:
-			self.absis = self.modulo - self.absis
+		self.ordinat = (self.modulo - self.ordinat) % self.modulo
 		return self
 
 	def gradient(self, point):
@@ -24,8 +23,7 @@ class Point:
 			dy += self.modulo
 		if dx==0:
 			return None
-		dx = invmod(dx, self.modulo)
-		return (dy * dx) % self.modulo
+		return (dy * invmod(dx, self.modulo)) % self.modulo
 
 	def equal(self, point):
 		return self.absis == point.absis and self.ordinat == point.ordinat and self.modulo == point.modulo
