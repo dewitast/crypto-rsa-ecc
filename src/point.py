@@ -27,6 +27,9 @@ class Point:
 		dx = invmod(dx, self.modulo)
 		return (dy * dx) % self.modulo
 
+	def equal(self, point):
+		return self.absis == point.absis and self.ordinat == point.ordinat and self.modulo == point.modulo
+
 	def is_inf(self):
 		return self.modulo == -1
 

@@ -4,10 +4,11 @@ from random import randrange
 from werkzeug import FileStorage
 
 from src.elliptic_curve import EllipticCurve
+from src.koblitz import encode, decode
 from src.point import Point
 from src.utils import is_prime
 
-MAX_KEY = 10000000
+MAX_KEY = 1000000
 
 app = Flask(__name__)
 
@@ -24,7 +25,31 @@ def ecc_encrypt():
 	if request.method == 'GET':
 		return render_template('ecc/encrypt.html')
 
-	return render_template('ecc/index.html')
+
+	message = request.files['message'].read()
+	length = len(message)
+	kob = int(request.form['koblitz'])
+
+	coef = int(request.form['x-coef'])
+	const = int(request.form['const'])
+	modulo = int(request.form['modulo'])
+	if not is_prime(modulo):
+		return "Error: Modulo must be prime"
+	curve = EllipticCurve(coef, const, modulo)
+
+	base_x = int(request.form['bpoint-x'])
+	base_y = int(request.form['bpoint-y'])
+	bpoint = Point(base_x, base_y, modulo)
+	if not curve.contains(bpoint):
+		return "Error: The base point is not a point in the curve"
+
+	pubkey_x = int(request.form['pubkey-x'])
+	pubkey_y = int(request.form['pubkey-y'])
+	pubkey = Point(pubkey_x, pubkey_y, modulo)
+	if not curve.contains(pubkey):
+		return "Error: The public key is not a point in the curve"
+
+	encode(curve, message, kob)
 
 @app.route('/ecc/decrypt', methods=['GET', 'POST'])
 def ecc_decrypt():

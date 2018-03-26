@@ -12,36 +12,36 @@
   <form action="/ecc/encrypt" method="POST" enctype="multipart/form-data">
     <div>
       <p>Message:</p>
-      <input type="file" name="message" />
+      <input type="file" name="message" required/>
     </div>
     <div>
       <p>Elliptic Curve: y<sup>2</sup> = x<sup>3</sup> +
-        <input type="number" name="x-coef" step="1" value="0" />
+        <input type="number" name="x-coef" step="1" value="0" required/>
         x +
-        <input type="number" name="const" step="1" value="0" />
+        <input type="number" name="const" step="1" value="0" required/>
         mod
-        <input type="number" name="modulo" step="1" value="0" />
+        <input type="number" name="modulo" step="1" value="0" required/>
       </p>
     </div>
     <div>
       <p>Base Point: (
-        <input type="number" name="bpoint-x" step="1" value="0"/>
+        <input type="number" name="bpoint-x" step="1" value="0" required/>
         , 
-        <input type="number" name="bpoint-y" step="1" value="0"/>
+        <input type="number" name="bpoint-y" step="1" value="0" required/>
         )
       </p>
     </div>
     <div>
       <p>Public Key: (
-        <input type="number" name="pubkey-x" step="1" value="0"/>
+        <input type="number" name="pubkey-x" step="1" value="0" required/>
         , 
-        <input type="number" name="pubkey-y" step="1" value="0"/>
+        <input type="number" name="pubkey-y" step="1" value="0" required/>
         )
       </p>
     </div>
     <div>
       <p> Koblitz's variable : 
-        <input type="number" name="koblitz" step="1" value="0"/>
+        <input type="number" name="koblitz" step="1" value="0" required/>
       </p>
     </div>
     <div>

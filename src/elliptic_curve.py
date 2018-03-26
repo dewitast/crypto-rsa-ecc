@@ -1,5 +1,5 @@
 from .point import Point
-from .utils import invmod
+from .utils import invmod, modpow
 
 INF = Point(0, 0, -1)
 
@@ -24,7 +24,7 @@ class EllipticCurve:
 		return (rhs==lhs)
 
 	def gradient(self, point):
-		dx = (3 * point.absis + self.coef) % self.modulo
+		dx = (3 * point.absis * point.absis + self.coef) % self.modulo
 		dy = (point.ordinat + point.ordinat) % self.modulo
 		if dy==0:
 			return None
@@ -32,6 +32,8 @@ class EllipticCurve:
 		return (dx * dy) % self.modulo
 
 	def add(self, point1, point2):
+		if point1.equal(point2):
+			return square(point1)
 		if point1.is_inf():
 			return point2
 		if point2.is_inf():
@@ -72,6 +74,17 @@ class EllipticCurve:
 				ans = self.add(ans, rest)
 			rest = self.square(rest)
 			k >>= 1
+		return ans
+
+	def solve(self, x):
+		rhs = (x*x*x+x*self.coef+self.const) % self.modulo
+		if self.modulo==2:
+			return rhs
+		if modpow(rhs, (self.modulo - 1) // 2, self.modulo) != 1:
+			return None
+		ans = 0
+		while (ans * ans) % self.modulo != rhs:
+			ans += 1
 		return ans
 
 	def print(self):
