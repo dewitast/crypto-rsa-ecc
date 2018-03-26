@@ -1,7 +1,15 @@
 from .utils import invmod
 
 class Point:
-	def __init__(self, absis, ordinat, modulo):
+	def __init__(self, absis, ordinat, modulo, string = None):
+		if string != None:
+			spl = string.split(',')
+			absis = spl[0]
+			ordinat = spl[1]
+			self.absis = int(absis[1:])
+			self.ordinat = int(ordinat[:-1])
+			self.modulo = modulo
+			return
 		self.modulo = modulo
 		self.absis = absis % self.modulo
 		if self.absis<0:
@@ -11,8 +19,7 @@ class Point:
 			self.ordinat += self.modulo
 
 	def negate(self):
-		if self.ordinat<0:
-			self.absis = self.modulo - self.absis
+		self.ordinat = (self.modulo - self.ordinat) % self.modulo
 		return self
 
 	def gradient(self, point):
@@ -24,12 +31,14 @@ class Point:
 			dy += self.modulo
 		if dx==0:
 			return None
-		dx = invmod(dx, self.modulo)
-		return (dy * dx) % self.modulo
+		return (dy * invmod(dx, self.modulo)) % self.modulo
+
+	def equal(self, point):
+		return self.absis == point.absis and self.ordinat == point.ordinat and self.modulo == point.modulo
 
 	def is_inf(self):
 		return self.modulo == -1
 
 	def print(self):
-		res = "(" + str(self.absis) + ", " + str(self.ordinat) + ")"
+		res = "(" + str(self.absis) + "," + str(self.ordinat) + ")"
 		return res

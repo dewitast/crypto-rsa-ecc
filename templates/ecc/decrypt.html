@@ -12,28 +12,25 @@
   <form action="/ecc/decrypt" method="POST" enctype="multipart/form-data">
     <div>
       <p>Message:</p>
-      <input type="file" name="message" />
+      <input type="file" name="message" required/>
     </div>
     <div>
       <p>Elliptic Curve: y<sup>2</sup> = x<sup>3</sup> +
-        <input type="number" name="x-coef" step="1" value="0" />
+        <input type="number" name="x-coef" step="1" value="0" required/>
         x +
-        <input type="number" name="const" step="1" value="0" />
+        <input type="number" name="const" step="1" value="0" required/>
         mod
-        <input type="number" name="modulo" step="1" value="0" />
+        <input type="number" name="modulo" step="1" value="0" required/>
       </p>
     </div>
     <div>
-      <p>Private Key: (
-        <input type="number" name="prikey-x" step="1" value="0"/>
-        , 
-        <input type="number" name="prikey-y" step="1" value="0"/>
-        )
+      <p>Private Key:
+        <input type="number" name="prikey" step="1" value="0" min="0" required/>
       </p>
     </div>
     <div>
       <p> Koblitz's variable : 
-        <input type="number" name="koblitz" step="1" value="0"/>
+        <input type="number" name="koblitz" step="1" value="0" required/>
       </p>
     </div>
     <div>
