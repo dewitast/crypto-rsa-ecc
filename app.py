@@ -49,9 +49,14 @@ def ecc_encrypt():
 	if not curve.contains(bpoint):
 		return "Error: The base point is not a point in the curve"
 
-	pubkey_x = int(request.form['pubkey-x'])
-	pubkey_y = int(request.form['pubkey-y'])
-	pubkey = Point(pubkey_x, pubkey_y, modulo)
+	pubkey = request.files.get('pubkey-file', None)
+	if pubkey==None:
+		pubkey_x = int(request.form['pubkey-x'])
+		pubkey_y = int(request.form['pubkey-y'])
+		pubkey = Point(pubkey_x, pubkey_y, modulo)
+	else:
+		pubkey = pubkey.read().decode()
+		pubkey = Point(0, 0, modulo, pubkey)
 	if not curve.contains(pubkey):
 		return "Error: The public key is not a point in the curve"
 
@@ -90,7 +95,11 @@ def ecc_decrypt():
 		return "Error: Modulo must be prime"
 	curve = EllipticCurve(coef, const, modulo)
 
-	prikey = int(request.form['prikey'])
+	prikey = request.files.get('prikey-file', None)
+	if prikey==None:
+		prikey = int(request.form['prikey'])
+	else:
+		prikey = int(prikey.read())
 
 	raw_ciphertext = message.decode().split(' ')
 	while raw_ciphertext[-1] == '':
