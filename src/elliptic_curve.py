@@ -31,9 +31,23 @@ class EllipticCurve:
 		dy = invmod(dy, self.modulo)
 		return (dx * dy) % self.modulo
 
+	def square(self, point):
+		if point.is_inf():
+			return point
+		grad = self.gradient(point)
+		if grad == None:
+			return INF
+		absis = (grad * grad - point.absis - point.absis) % self.modulo
+		if absis<0:
+			absis += self.modulo
+		ordinat = (grad * (point.absis - absis) - point.ordinat) % self.modulo
+		if ordinat<0:
+			ordinat += self.modulo
+		return Point(absis, ordinat, self.modulo)
+
 	def add(self, point1, point2):
 		if point1.equal(point2):
-			return square(point1)
+			return self.square(point1)
 		if point1.is_inf():
 			return point2
 		if point2.is_inf():
@@ -45,20 +59,6 @@ class EllipticCurve:
 		if absis<0:
 			absis += self.modulo
 		ordinat = (grad * (point1.absis - absis) - point1.ordinat) % self.modulo
-		if ordinat<0:
-			ordinat += self.modulo
-		return Point(absis, ordinat, self.modulo)
-
-	def square(self, point):
-		if point.is_inf():
-			return point
-		grad = self.gradient(point)
-		if grad == None:
-			return INF
-		absis = (grad * grad - point.absis - point.absis) % self.modulo
-		if absis<0:
-			absis += self.modulo
-		ordinat = (grad * (point.absis - absis) - point.ordinat) % self.modulo
 		if ordinat<0:
 			ordinat += self.modulo
 		return Point(absis, ordinat, self.modulo)

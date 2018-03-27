@@ -18,4 +18,4 @@ def decode_point(point, var):
 	return m
 
 def decode(arr, var):
-	return ''.join([chr(decode_point(point, var)) for point in arr])
+	return bytes([max(1, min(0xFF, decode_point(point, var))) for point in arr])
