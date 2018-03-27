@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>RSA</title>
+</head>
+
+<body>
+  <h1>
+  	Rivest - Shamir - Adleman
+  </h1>
+  <form action="/rsa/generate" method="POST">
+    <div>
+      <p>First prime: 
+        <input type="number" id="p-field" name="p" step="1" value="2" min="2" required/> 
+        <button type="button" id="generate-p-button">Generate prime</button>
+        <input type="number" id="generate-p-bits-field" step="1" value="512" min="1"/> bits
+      </p>
+    </div>
+    <div>
+      <p>Second prime:
+		<input type="number" id="q-field" name="q" step="1" value="2" min="2" required/>
+		<button type="button" id="generate-q-button">Generate prime</button>
+		<input type="number" id="generate-q-bits-field" step="1" value="512" min="1"/> bits
+      </p>
+    </div>
+    <div>
+      <p>Public exponent:
+        <input type="number" name="e" step="1" value="65537" required/>
+      </p>
+    </div>
+    <div>
+      <p>Filename:
+        <input type="text" name="filename" required/>
+      </p>
+    </div>
+    <div>
+      <br>
+      <input type="submit" value="Generate Key"/>
+    </div>
+  </form>
+  <br />
+  <br />
+  <a href="/">Home</a>
+  <script src="{{ url_for('static', filename='js/jquery-3.3.1.min.js') }}"></script>
+  <script>
+	$('#generate-p-button').click(function() {
+		$.post("/rsa/generateprime", {bits: $('#generate-p-bits-field').val()}, function(result) {
+			$('#p-field').val(result)
+		});
+	});
+	$('#generate-q-button').click(function() {
+		$.post("/rsa/generateprime", {bits: $('#generate-q-bits-field').val()}, function(result) {
+			$('#q-field').val(result)
+		});
+	});
+  </script>
+</body>
+
+</html>

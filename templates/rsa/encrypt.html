@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>RSA</title>
+</head>
+
+<body>
+  <h1>
+  	Rivest - Shamir - Adleman
+  </h1>
+  <form action="/rsa/encrypt" method="POST" enctype="multipart/form-data">
+    <div>
+      <p>Message:</p>
+      <input type="file" name="message" required/>
+    </div>
+    <div>
+      <p>Public key: (modulus: 
+        <input type="number" name="n" step="1" value="2" min="2" required/>
+        , public exponent: 
+        <input type="number" name="e" step="1" value="65537" min="2" required/>
+        )
+        <button type="button" id="read-from-file-button">Read from public key file</button>
+      </p>
+    </div>
+    <div>
+      <br>
+      <input type="submit" value="Encrypt Message" />
+    </div>
+  </form>
+  <br />
+  <br />
+  <a href="/">Home</a>
+  <script src="{{ url_for('static', filename='js/jquery-3.3.1.min.js') }}"></script>
+  <script>
+  </script>
+</body>
+  
+</html>

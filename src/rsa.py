@@ -1,5 +1,5 @@
 import random
-import pickle
+import json
 
 class RSAKeyPair:
 	def __init__ (self, p, q, e):
@@ -19,14 +19,13 @@ class RSAPublicKey:
 	def encrypt (self, plaintext):
 		return pow(plaintext, self.e, self.n)
 		
-	def write_file (self, filename):
-		with open(filename, 'wb') as f:
-			pickle.dump((self.n, self.e), f)
+	def to_json (self):
+		return json.dumps({'n': self.n, 'e': self.e})
 	
 	@classmethod
-	def read_file (cls, filename):
-		with open(filename, 'rb') as f:
-			return cls(*pickle.load(f))
+	def from_json (cls, s):
+		loaded_json = json.loads(s)
+		return cls(loaded_json.n, loaded_json.e)
 		
 class RSAPrivateKey:
 	def __init__ (self, n, d):
@@ -36,14 +35,13 @@ class RSAPrivateKey:
 	def decrypt (self, ciphertext):
 		return pow(ciphertext, self.d, self.n)
 		
-	def write_file (self, filename):
-		with open(filename, 'wb') as f:
-			pickle.dump((self.n, self.d), f)
+	def to_json (self):
+		return json.dumps({'n': self.n, 'd': self.d})
 	
-	@classmethod		
-	def read_file (cls, filename):
-		with open(filename, 'rb') as f:
-			return cls(*pickle.load(f))
+	@classmethod
+	def from_json (cls, s):
+		loaded_json = json.loads(s)
+		return cls(loaded_json.n, loaded_json.d)
 
 		
 SMALL_PRIMES = [
@@ -53,7 +51,7 @@ SMALL_PRIMES = [
     97, 101, 103, 107, 109, 113, 127, 131,
     137, 139, 149, 151, 157, 163, 167, 173,
     179, 181, 191, 193, 197, 199, 211, 223,
-    227, 229, 233, 239, 241, 251, 257, 263,
+    227, 229, 233, 	239, 241, 251, 257, 263,
     269, 271, 277, 281, 283, 293, 307, 311,
     313, 317, 331, 337, 347, 349, 353, 359,
     367, 373, 379, 383, 389, 397, 401, 409,
