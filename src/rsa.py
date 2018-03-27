@@ -25,7 +25,8 @@ class RSAPublicKey:
 	@classmethod
 	def from_json (cls, s):
 		loaded_json = json.loads(s)
-		return cls(loaded_json.n, loaded_json.e)
+		print(loaded_json)
+		return cls(loaded_json['n'], loaded_json['e'])
 		
 class RSAPrivateKey:
 	def __init__ (self, n, d):
@@ -41,7 +42,7 @@ class RSAPrivateKey:
 	@classmethod
 	def from_json (cls, s):
 		loaded_json = json.loads(s)
-		return cls(loaded_json.n, loaded_json.d)
+		return cls(loaded_json['n'], loaded_json['d'])
 
 		
 SMALL_PRIMES = [
@@ -109,19 +110,10 @@ def extended_gcd(a, b):
 def modular_inverse(a, m):
 	g, x, _ = extended_gcd(a, m)
 	if g != 1:
-		raise Exception('not invertable')
+		raise Exception('not invertible')
 	else:
 		return x % m
 		
-def main ():
-	rsaKeyPair = RSAKeyPair(generate_random_prime(1024), generate_random_prime(1024), 65537)
-	plaintext = 3
-	ciphertext = rsaKeyPair.public.encrypt(plaintext)
-	result = rsaKeyPair.private.decrypt(ciphertext)
-	print(plaintext)
-	print(ciphertext)
-	print(result)
-	
-if __name__ == '__main__':
-	main()
+def byte_length (n):
+	return (n.bit_length() + 7) // 8
 

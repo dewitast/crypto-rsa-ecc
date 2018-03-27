@@ -15,12 +15,12 @@
       <input type="file" name="message" required/>
     </div>
     <div>
-      <p>Public key: (modulus: 
+      <p>Public key: (n: 
         <input type="number" name="n" step="1" value="2" min="2" required/>
-        , public exponent: 
+        , e: 
         <input type="number" name="e" step="1" value="65537" min="2" required/>
         )
-        <button type="button" id="read-from-file-button">Read from public key file</button>
+        <input type="file" name="pubkey-file"/>
       </p>
     </div>
     <div>
@@ -31,9 +31,6 @@
   <br />
   <br />
   <a href="/">Home</a>
-  <script src="{{ url_for('static', filename='js/jquery-3.3.1.min.js') }}"></script>
-  <script>
-  </script>
 </body>
   
 </html>
