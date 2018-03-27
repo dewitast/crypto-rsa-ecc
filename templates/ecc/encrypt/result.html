@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>ECC</title>
+</head>
+
+<body>
+  <h1>
+  	Success
+  </h1>
+  <h2>
+    Plaintext :
+  </h2>
+  <p>
+    {{ plaintext }}
+  </p>
+  <h2>
+    Ciphertext :
+  </h2>
+  <p>
+    {{ ciphertext }}
+  </p>
+  <p>
+    Encryption time : {{ time }} <br />
+    File size : {{ size }} bytes
+  </p>
+  <br />
+  <p>
+    <a href="/download/{{ filename }}"> Download ciphertext </a>
+  </p>
+  <br />
+  <br />
+  <a href="/">Home</a>
+</body>
+
+</html>
